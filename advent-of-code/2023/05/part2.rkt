@@ -1,7 +1,4 @@
-#!/usr/bin/env guile
-!#
-
-(use-modules (ice-9 rdelim))
+#lang racket
 
 (define port (open-input-file "input"))
 
@@ -9,7 +6,7 @@
   (let ()
     (define nums-str 
       (string-trim
-          (list-ref (string-split (read-line port) #\:) 1)))
+          (list-ref (string-split (read-line port) ":") 1)))
     (define (pairing l)
       (define (loop ret l)
         (if (null? l)
@@ -22,9 +19,9 @@
             (cddr l))))
       (loop '() l))
     (reverse 
-      (pairing (map string->number (string-split nums-str #\space))))))
+      (pairing (map string->number (string-split nums-str " "))))))
 
-(read-line port)
+(define _ (read-line port))
 
 (define (read-line-convert-eof port)
   (define line (read-line port))
@@ -35,7 +32,7 @@
     (define line (string-trim (read-line-convert-eof port)))
     (if (= 0 (string-length line))
       (sort (reverse ret) (lambda (x y) (< (cadr x) (cadr y))))
-      (loop (cons (map string->number (string-split line #\space))
+      (loop (cons (map string->number (string-split line " "))
                   ret))))
   (read-line port)
   (loop '()))

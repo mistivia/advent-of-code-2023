@@ -1,7 +1,4 @@
-#!/usr/bin/env guile
-!#
-
-(use-modules (ice-9 rdelim))
+#lang racket
 
 (define port (open-input-file "input"))
 
@@ -9,10 +6,10 @@
   (let ()
     (define nums-str 
       (string-trim
-          (list-ref (string-split (read-line port) #\:) 1)))
-    (map string->number (string-split nums-str #\space))))
+          (list-ref (string-split (read-line port) ":") 1)))
+    (map string->number (string-split nums-str " "))))
 
-(read-line port)
+(define _ (read-line port))
 
 (define (read-line-convert-eof port)
   (define line (read-line port))
@@ -23,7 +20,7 @@
     (define line (string-trim (read-line-convert-eof port)))
     (if (= 0 (string-length line))
       (reverse ret)
-      (loop (cons (map string->number (string-split line #\space))
+      (loop (cons (map string->number (string-split line " "))
                   ret))))
   (read-line port)
   (loop '()))
@@ -37,11 +34,10 @@
 (define h2l (read-map))
 (define maps (list s2s s2f f2w w2l l2t t2h h2l))
 
-
 (define (gen-mapper the-map)
   (define (mapper x)
     (define (loop the-map)
-      (if (nil? the-map)
+      (if (null? the-map)
         x
         (let ()
           (define cur-map (car the-map))
