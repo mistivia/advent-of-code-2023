@@ -1,13 +1,7 @@
 #lang racket
 
+(require "../lib/utils.rkt")
 (require "../lib/obj.rkt")
-
-(define (get-lines fp)
-  (let loop ((lines '()))
-    (define l (read-line fp))
-    (if (eof-object? l)
-      (reverse lines)
-      (loop (cons l lines)))))
 
 (define fp (open-input-file "input"))
 

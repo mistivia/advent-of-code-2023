@@ -1,13 +1,8 @@
 #lang racket
 
-(define fp (open-input-file "input"))
+(require "../lib/utils.rkt")
 
-(define (get-lines fp)
-  (let loop ((lines '()))
-    (define l (read-line fp))
-    (if (eof-object? l)
-      (reverse lines)
-      (loop (cons l lines)))))
+(define fp (open-input-file "input"))
 
 (define lines (get-lines fp))
 
@@ -50,12 +45,6 @@
               (> (caddr head) 14)) ; b
         #f
         (possible? (cdr game))))))
-
-(define (enumerate lst)
-  (let loop ((i 1) (ret '()) (remain lst))
-    (if (null? remain)
-      (reverse ret)
-      (loop (+ 1 i) (cons (list (car remain) i) ret) (cdr remain)))))
 
 (apply + (map cadr
               (filter (lambda (game)

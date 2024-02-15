@@ -21,7 +21,7 @@
     (reverse 
       (pairing (map string->number (string-split nums-str " "))))))
 
-(define _ (read-line port))
+(begin (read-line port) (void))
 
 (define (read-line-convert-eof port)
   (define line (read-line port))

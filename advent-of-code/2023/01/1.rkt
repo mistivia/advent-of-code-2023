@@ -1,14 +1,8 @@
 #lang racket
 
-(define fp (open-input-file "input"))
-(define sum 0)
+(require "../lib/utils.rkt")
 
-(define (get-lines fp)
-  (let loop ((lines '()))
-    (define l (read-line fp))
-    (if (eof-object? l)
-      (reverse lines)
-      (loop (cons l lines)))))
+(define fp (open-input-file "input"))
 
 (define lines (get-lines fp))
 
