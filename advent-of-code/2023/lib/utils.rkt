@@ -1,7 +1,14 @@
-#lang racket
+#lang racket/base
 
 (provide get-lines
-         enumerate)
+         enumerate
+         repeat)
+
+(define (repeat n e)
+  (let loop ((i 0) (ret '()))
+    (if (>= i n)
+      ret
+      (loop (+ 1 i) (cons e ret)))))
 
 (define (get-lines fp)
   (let loop ((lines '()))

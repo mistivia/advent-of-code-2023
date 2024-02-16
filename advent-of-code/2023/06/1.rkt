@@ -1,4 +1,4 @@
-#lang racket
+#lang racket/base
 
 (define in (open-input-file "input"))
 

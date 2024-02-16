@@ -1,4 +1,4 @@
-#lang racket
+#lang racket/base
 
 (define input 
   (with-input-from-file "input"
@@ -18,16 +18,23 @@
   (cond ((eq? char #\A) 12)
         ((eq? char #\K) 11)
         ((eq? char #\Q) 10)
-        ((eq? char #\J) 9)
-        ((eq? char #\T) 8)
+        ((eq? char #\J) 0)
+        ((eq? char #\T) 9)
         (else (- (string->number (make-string 1 char))
-                 2))))
+                 1))))
+
+(define (joker-transform type)
+  (define joker-num (vector-ref type 0))
+  (vector-set! type 0 0)
+  (vector-sort! type >)
+  (vector-set! type 0 (+ joker-num (vector-ref type 0)))
+  type)
 
 (define (hand-type hand)
   (define vec (make-vector 13 0))
   (let loop ((i 0))
     (if (>= i 5)
-      (vector->list (vector-sort vec >))
+      (vector->list (joker-transform vec))
       (let ()
         (define index (card-number (string-ref hand i)))
         (vector-set! vec index (+ 1 (vector-ref vec index)))
