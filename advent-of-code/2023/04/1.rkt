@@ -1,4 +1,4 @@
-#lang racket/base
+#lang racket
 
 (require "../../lib/utils.rkt")
 (require "../../lib/obj.rkt")

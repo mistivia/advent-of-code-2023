@@ -1,4 +1,4 @@
-#lang racket/base
+#lang racket
 
 (define port (open-input-file "input"))
 

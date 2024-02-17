@@ -1,4 +1,4 @@
-#lang racket/base
+#lang racket
 
 (define input 
   (with-input-from-file "input"
