@@ -1,6 +1,6 @@
 #lang racket/base
 
-(require "../lib/utils.rkt")
+(require "../../lib/utils.rkt")
 
 (define fp (open-input-file "input"))
 

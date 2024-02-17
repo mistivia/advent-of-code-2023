@@ -1,7 +1,7 @@
 #lang racket/base
 
-(require "../lib/utils.rkt")
-(require "../lib/obj.rkt")
+(require "../../lib/utils.rkt")
+(require "../../lib/obj.rkt")
 
 (define (read-input)
   (call-with-input-file "input"
