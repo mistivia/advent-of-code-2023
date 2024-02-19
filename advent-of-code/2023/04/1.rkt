@@ -21,9 +21,9 @@
   (make-card win-nums nums))
 
 (define (point card)
-  (define wins (length (filter (lambda (x) (member x (card 'win-nums))) (card 'nums))))
+  (define wins (length (filter (λ (x) (member x (card 'win-nums))) (card 'nums))))
   (if (= wins 0)
-    0
-    (expt 2 (- wins 1))))
+      0
+      (expt 2 (- wins 1))))
 
 (apply + (map point (map parse-card lines)))

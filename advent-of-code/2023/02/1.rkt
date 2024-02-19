@@ -18,35 +18,35 @@
   (define b 0)
   (define balls (string-split str ","))
   (set! balls
-    (map (lambda (s)
-           (define pair (map string-trim (string-split s " ")))
-           (list (string->number (car pair)) (cadr pair)))
-         balls))
+        (map (λ (s)
+               (define pair (map string-trim (string-split s " ")))
+               (list (string->number (car pair)) (cadr pair)))
+             balls))
   (let loop ((balls balls))
     (if (null? balls)
-      '()
-      (let ()
-        (define ball (car balls))
-        (define number (car ball))
-        (define color (cadr ball))
-        (cond ((string=? "red" color) (set! r number))
-              ((string=? "green" color) (set! g number))
-              ((string=? "blue" color) (set! b number)))
-        (loop (cdr balls)))))
+        '()
+        (let ()
+          (define ball (car balls))
+          (define number (car ball))
+          (define color (cadr ball))
+          (cond ((string=? "red" color) (set! r number))
+                ((string=? "green" color) (set! g number))
+                ((string=? "blue" color) (set! b number)))
+          (loop (cdr balls)))))
   (list r g b))
 
 (define (possible? game)
   (if (null? game)
-    #t
-    (let ()
-      (define head (car game))
-      (if (or (> (car head) 12)    ; r
-              (> (cadr head) 13)   ; g
-              (> (caddr head) 14)) ; b
-        #f
-        (possible? (cdr game))))))
+      #t
+      (let ()
+        (define head (car game))
+        (if (or (> (car head) 12)    ; r
+                (> (cadr head) 13)   ; g
+                (> (caddr head) 14)) ; b
+            #f
+            (possible? (cdr game))))))
 
 (apply + (map cadr
-              (filter (lambda (game)
+              (filter (λ (game)
                         (possible? (car game)))
                       (enumerate (map extract-game lines)))))

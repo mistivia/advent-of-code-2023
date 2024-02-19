@@ -5,13 +5,13 @@
          obj-show)
 
 (define (alist->obj alist)
-  (lambda key
+  (λ key
     (if (null? key)
-      alist
-      (cadr (assoc (car key) alist)))))
+        alist
+        (cadr (assoc (car key) alist)))))
 
 (define (obj-maker . fields)
-  (lambda inits
+  (λ inits
     (define alist (map list fields inits))
     (alist->obj alist)))
 
@@ -20,13 +20,13 @@
   (define new-alist
     (let loop ((new-list '()) (cur alist) (is-set #f))
       (if (null? cur)
-        (if is-set
-          new-list
-          (cons (list key value) new-list))
-        (let ()
-          (if (eq? key (caar cur))
-            (loop (cons (list key value) new-list) (cdr cur) #t)
-            (loop (cons (car cur) new-list) (cdr cur) is-set))))))
+          (if is-set
+              new-list
+              (cons (list key value) new-list))
+          (let ()
+            (if (eq? key (caar cur))
+                (loop (cons (list key value) new-list) (cdr cur) #t)
+                (loop (cons (car cur) new-list) (cdr cur) is-set))))))
   (alist->obj new-alist))
 
 (define (obj-show x) (x))

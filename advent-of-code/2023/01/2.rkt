@@ -21,7 +21,7 @@
 (define (extract-number rawline)
   (define line (replace-digit rawline))
   (define number-list (filter char-numeric? (string->list line)))
-  (set! number-list (map (lambda (c)
+  (set! number-list (map (λ (c)
                            (string->number (list->string (list c))))
                          number-list))
   (+ (last number-list) (* 10 (car number-list))))

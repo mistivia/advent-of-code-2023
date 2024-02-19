@@ -4,7 +4,7 @@
 
 (define lines
   (call-with-input-file "input"
-    (lambda (fp)
+    (λ (fp)
       (get-lines fp))))
 
 (define elves (split-list-by "" lines))

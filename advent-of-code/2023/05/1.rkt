@@ -2,11 +2,11 @@
 
 (define port (open-input-file "input"))
 
-(define seed 
+(define seed
   (let ()
-    (define nums-str 
+    (define nums-str
       (string-trim
-          (list-ref (string-split (read-line port) ":") 1)))
+       (list-ref (string-split (read-line port) ":") 1)))
     (map string->number (string-split nums-str " "))))
 
 (begin (read-line port) (void))
@@ -19,9 +19,9 @@
   (define (loop ret)
     (define line (string-trim (read-line-convert-eof port)))
     (if (= 0 (string-length line))
-      (reverse ret)
-      (loop (cons (map string->number (string-split line " "))
-                  ret))))
+        (reverse ret)
+        (loop (cons (map string->number (string-split line " "))
+                    ret))))
   (read-line port)
   (loop '()))
 
@@ -38,16 +38,16 @@
   (define (mapper x)
     (define (loop the-map)
       (if (null? the-map)
-        x
-        (let ()
-          (define cur-map (car the-map))
-          (define target (car cur-map))
-          (define start (cadr cur-map))
-          (define len (caddr cur-map))
-          (if (and (>= x start)
-                   (<= x (+ start len)))
-            (+ target (- x start))
-            (loop (cdr the-map))))))
+          x
+          (let ()
+            (define cur-map (car the-map))
+            (define target (car cur-map))
+            (define start (cadr cur-map))
+            (define len (caddr cur-map))
+            (if (and (>= x start)
+                     (<= x (+ start len)))
+                (+ target (- x start))
+                (loop (cdr the-map))))))
     (loop the-map))
   mapper)
 

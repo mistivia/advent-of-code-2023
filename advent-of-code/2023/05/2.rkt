@@ -2,24 +2,24 @@
 
 (define port (open-input-file "input"))
 
-(define seed 
+(define seed
   (let ()
-    (define nums-str 
+    (define nums-str
       (string-trim
-          (list-ref (string-split (read-line port) ":") 1)))
+       (list-ref (string-split (read-line port) ":") 1)))
     (define (pairing l)
       (define (loop ret l)
         (if (null? l)
-          ret
-          (loop
-            (cons (cons 
-                    (car l) 
+            ret
+            (loop
+             (cons (cons
+                    (car l)
                     (+ (car l) (cadr l)))
-                  ret)
-            (cddr l))))
+                   ret)
+             (cddr l))))
       (loop '() l))
-    (reverse 
-      (pairing (map string->number (string-split nums-str " "))))))
+    (reverse
+     (pairing (map string->number (string-split nums-str " "))))))
 
 (begin (read-line port) (void))
 
@@ -31,9 +31,9 @@
   (define (loop ret)
     (define line (string-trim (read-line-convert-eof port)))
     (if (= 0 (string-length line))
-      (sort (reverse ret) (lambda (x y) (< (cadr x) (cadr y))))
-      (loop (cons (map string->number (string-split line " "))
-                  ret))))
+        (sort (reverse ret) (λ (x y) (< (cadr x) (cadr y))))
+        (loop (cons (map string->number (string-split line " "))
+                    ret))))
   (read-line port)
   (loop '()))
 
@@ -53,40 +53,40 @@
     (define start (car r))
     (define end (cdr r))
     (if (null? mlist)
-      (cons r result)
-      (let ()
-        (define cur-map (car mlist))
-        (define map-target (car cur-map))
-        (define map-start (cadr cur-map))
-        (define map-end (+ map-start (caddr cur-map)))
-        (define offset (- map-target map-start))
-        (define (pair-offset p) (cons (+ offset (car p)) (+ offset (cdr p))))
-        (cond ((<= end start)
-                    result)
-              ((>= start map-end)
-                    (loop result (cdr mlist) r))
-              ((>= start map-start)
-                    (loop
-                      (cons (pair-offset (cons start (min end map-end)))
-                            result)
-                      (cdr mlist)
-                      (cons (min end map-end) end)))
-              ((<= end map-start)
-                    (cons r result))
-              ((< start map-start)
-                    (loop
-                      (cons (cons start map-start) result)
-                      mlist
-                      (cons map-start end)))
-              (else (error "unhandled cond in range-map"))))))
+        (cons r result)
+        (let ()
+          (define cur-map (car mlist))
+          (define map-target (car cur-map))
+          (define map-start (cadr cur-map))
+          (define map-end (+ map-start (caddr cur-map)))
+          (define offset (- map-target map-start))
+          (define (pair-offset p) (cons (+ offset (car p)) (+ offset (cdr p))))
+          (cond ((<= end start)
+                 result)
+                ((>= start map-end)
+                 (loop result (cdr mlist) r))
+                ((>= start map-start)
+                 (loop
+                  (cons (pair-offset (cons start (min end map-end)))
+                        result)
+                  (cdr mlist)
+                  (cons (min end map-end) end)))
+                ((<= end map-start)
+                 (cons r result))
+                ((< start map-start)
+                 (loop
+                  (cons (cons start map-start) result)
+                  mlist
+                  (cons map-start end)))
+                (else (error "unhandled cond in range-map"))))))
   (reverse (loop '() mlist r)))
 
 (define (gen-range-mapper the-map)
   (define (mapper range-list)
     (apply append
-        (map 
-            (lambda (range)
-              (range-map the-map range)) 
+           (map
+            (λ (range)
+              (range-map the-map range))
             range-list)))
   mapper)
 
