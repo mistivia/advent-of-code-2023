@@ -40,15 +40,15 @@
 (define (simulate start)
   (let loop ((i 0) (cur start))
     (if (is-end? cur)
-      i
-      (let ()
-        (define instruction (next-instruction))
-        (define (next-point point)
-          (define mapping (hash-ref the-map point))
-          (if (char=? instruction #\L)
-            (car mapping)
-            (cadr mapping)))
-        (loop (+ 1 i) (next-point cur))))))
+        i
+        (let ()
+          (define instruction (next-instruction))
+          (define (next-point point)
+            (define mapping (hash-ref the-map point))
+            (if (char=? instruction #\L)
+                (car mapping)
+                (cadr mapping)))
+          (loop (+ 1 i) (next-point cur))))))
 
 
 (define starts

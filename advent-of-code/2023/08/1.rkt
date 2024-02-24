@@ -34,14 +34,14 @@
 (define (simulate start end)
   (let loop ((i 0) (cur start))
     (if (string=? cur end)
-      i
-      (let ()
-        (define instruction (next-instruction))
-        (define mapping (hash-ref the-map cur))
-        (define next
-          (if (char=? instruction #\L)
-            (car mapping)
-            (cadr mapping)))
-        (loop (+ 1 i) next)))))
+        i
+        (let ()
+          (define instruction (next-instruction))
+          (define mapping (hash-ref the-map cur))
+          (define next
+            (if (char=? instruction #\L)
+                (car mapping)
+                (cadr mapping)))
+          (loop (+ 1 i) next)))))
 
 (simulate "AAA" "ZZZ")
