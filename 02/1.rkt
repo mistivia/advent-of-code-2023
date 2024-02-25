@@ -1,6 +1,6 @@
 #lang racket
 
-(require "../../lib/utils.rkt")
+(require "../lib/utils.rkt")
 
 (define fp (open-input-file "input"))
 
@@ -35,10 +35,18 @@
           (loop (cdr balls)))))
   (list r g b))
 
-(define (power game)
-  (define rs (map car game))
-  (define gs (map cadr game))
-  (define bs (map caddr game))
-  (* (apply max rs) (apply max gs) (apply max bs)))
+(define (possible? game)
+  (if (null? game)
+      #t
+      (let ()
+        (define head (car game))
+        (if (or (> (car head) 12)    ; r
+                (> (cadr head) 13)   ; g
+                (> (caddr head) 14)) ; b
+            #f
+            (possible? (cdr game))))))
 
-(apply + (map power (map extract-game lines)))
+(apply + (map cadr
+              (filter (λ (game)
+                        (possible? (car game)))
+                      (enumerate (map extract-game lines)))))

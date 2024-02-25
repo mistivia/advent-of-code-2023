@@ -1,7 +1,7 @@
 #lang racket
 
-(require "../../lib/utils.rkt")
-(require "../../lib/obj.rkt")
+(require "../lib/utils.rkt")
+(require "../lib/obj.rkt")
 
 (define fp (open-input-file "input"))
 

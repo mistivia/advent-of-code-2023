@@ -1,6 +1,6 @@
 #lang racket
 
-(require "../../lib/utils.rkt")
+(require "../lib/utils.rkt")
 
 (define lines
   (call-with-input-file "input"
@@ -21,6 +21,7 @@
 (define (predict lst)
   (if (andmap (λ (x) (= x (car lst))) lst)
     (car lst)
-    (- (car lst) (predict (diff lst)))))
+    (+ (last lst) (predict (diff lst)))))
 
 (apply + (map predict data))
+

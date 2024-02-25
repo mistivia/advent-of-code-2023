@@ -1,6 +1,6 @@
 #lang racket
 
-(require "../../lib/utils.rkt")
+(require "../lib/utils.rkt")
 
 (define lines
   (call-with-input-file "input"

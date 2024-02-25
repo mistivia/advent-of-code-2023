@@ -1,3 +1,3 @@
-# Practice
+# Advent of Code 2023 in Racket
 
-This code repository is the records of my solutions to problems on websites such as Advent of Code and CodeWars. Many of the problems are at the beginner level, so this code repository may have limited utility for others.
+My solutions of [Advent of Code 2023](https://adventofcode.com/2023) in [Racket](https://racket-lang.org/).

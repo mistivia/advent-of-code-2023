@@ -1,7 +1,7 @@
 #lang racket
 
-(require "../../lib/utils.rkt")
-(require "../../lib/obj.rkt")
+(require "../lib/utils.rkt")
+(require "../lib/obj.rkt")
 
 (define (read-input)
   (call-with-input-file "input"
@@ -48,37 +48,55 @@
   (reverse nums))
 (define nums (scan-nums))
 
-(define (is-symbol? c)
-  (and (not (char-numeric? c))
-       (not (char=? #\. c))))
-
-(define (collect-adjacent num)
+(define (collect-adjacent-positions num)
+  (define (position-range line start end)
+    (define delta (- end start))
+    (map list (repeat delta line) (range start end)))
   (define left
     (if (= 0 (num 'col))
         '()
-        (list (char-at (num 'line) (- (num 'col) 1)))))
+        (list (list (num 'line) (- (num 'col) 1)))))
   (define right
     (if (= width (+ (num 'col) (num 'length)))
         '()
-        (list (char-at (num 'line) (+ (num 'col) (num 'length))))))
+        (list (list (num 'line) (+ (num 'col) (num 'length))))))
   (define up
     (if (= 0 (num 'line))
         '()
-        (string->list
-         (substring (vector-ref schema (- (num 'line) 1))
-                    (max 0 (- (num 'col) 1))
-                    (min width (+ (num 'col) (num 'length) 1))))))
+        (position-range (- (num 'line) 1)
+                        (max 0 (- (num 'col) 1))
+                        (min width (+ (num 'col) (num 'length) 1)))))
   (define down
     (if (= (- height 1) (num 'line))
         '()
-        (string->list
-         (substring (vector-ref schema (+ (num 'line) 1))
-                    (max 0 (- (num 'col) 1))
-                    (min width (+ (num 'col) (num 'length) 1))))))
+        (position-range (+ (num 'line) 1)
+                        (max 0 (- (num 'col) 1))
+                        (min width (+ (num 'col) (num 'length) 1)))))
   (append left right up down))
 
-(define (is-part-num? num)
-  (findf is-symbol? (collect-adjacent num)))
+(define asterisks (make-hash))
 
-(apply + (map (λ (x) (x 'value))
-              (filter is-part-num? nums)))
+(define (mark-adj-asterisk num)
+  (define adjs (collect-adjacent-positions num))
+  (define (mark coord)
+    (if (not (char=? #\* (char-at (car coord) (cadr coord))))
+        (void)
+        (let ()
+          (when (not (hash-has-key? asterisks coord))
+            (hash-set! asterisks coord '()))
+          (hash-set! asterisks coord (cons (num 'value) (hash-ref asterisks coord))))))
+  (for-each mark adjs))
+
+(for-each mark-adj-asterisk nums)
+
+(define aster-list (hash->list asterisks))
+
+(define (is-gear? aster)
+  (define nums-list (cdr aster))
+  (= 2 (length nums-list)))
+
+(define (power aster)
+  (define nums-list (cdr aster))
+  (* (car nums-list) (cadr nums-list)))
+
+(apply + (map power (filter is-gear? aster-list)))
