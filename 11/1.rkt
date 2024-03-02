@@ -55,8 +55,6 @@
         (loop (+ 1 i) (+ 2 i) ret)
         (loop i (+ 1 j) (cons (cons i j) ret))))))
 
-
-
 (define (distance n1 n2)
   (define x1 (car (vector-ref galaxies n1)))
   (define x2 (car (vector-ref galaxies n2)))

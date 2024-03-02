@@ -11,12 +11,19 @@
         ret
         (loop (+ 1 i) (cons e ret)))))
 
+(define (trim-lines lines)
+  (if (= 0 (string-length (car lines)))
+      (trim-lines (cdr lines))
+      lines))
+
 (define (get-lines fp)
-  (let loop ((lines '()))
-    (define l (read-line fp))
-    (if (eof-object? l)
-        (reverse lines)
-        (loop (cons l lines)))))
+  (define lines
+    (let loop ((lines '()))
+      (define l (read-line fp))
+      (if (eof-object? l)
+          (reverse lines)
+          (loop (cons l lines)))))
+  (reverse (trim-lines (reverse (trim-lines lines)))))
 
 (define (enumerate lst)
   (let loop ((i 1) (ret '()) (remain lst))
