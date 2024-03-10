@@ -3,7 +3,8 @@
 (provide get-lines
          enumerate
          repeat
-         split-list-by)
+         split-list-by
+         transpose-list)
 
 (define (repeat n e)
   (let loop ((i 0) (ret '()))
@@ -41,3 +42,14 @@
         (if (cmp e (car lst))
             (loop (cons (reverse cur) ret) '() (cdr lst))
             (loop ret (cons (car lst) cur) (cdr lst))))))
+
+(define (transpose-list lines)
+  (define width (string-length (car lines)))
+  (define new-lines (make-vector width))
+  (let loop ((i 0))
+    (if (>= i width)
+      (vector->list new-lines)
+      (let ()
+        (define char-list (map (λ (l) (string-ref l i)) lines))
+        (vector-set! new-lines i (list->string char-list))
+        (loop (+ i 1))))))
