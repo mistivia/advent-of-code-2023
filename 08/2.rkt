@@ -4,14 +4,13 @@
 
 (define lines
   (call-with-input-file "input"
-    (lambda (fp)
-      (get-lines fp))))
+    (λ (fp) (get-lines fp))))
 
 (define instructions (string->list (car lines)))
 
 (define (make-instruction-generator)
   (define cur instructions)
-  (lambda ()
+  (λ ()
     (when (null? cur)
       (set! cur instructions))
     (define ret (car cur))
